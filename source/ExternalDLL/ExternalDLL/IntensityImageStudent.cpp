@@ -12,13 +12,11 @@ IntensityImageStudent::IntensityImageStudent(const IntensityImageStudent &other)
 	temp.setAllPixels(getAllPixels());
 }
 
-IntensityImageStudent::IntensityImageStudent(const int width, const int height) : 
-IntensityImage(width, height),
-width(width),
-height(height){
+IntensityImageStudent::IntensityImageStudent(const int width, const int height) : IntensityImage(width, height){
 	//int throwError = 0, e = 1 / throwError;
 	//TODO: Initialize pixel storage
-	pixelData.resize(width*height);
+	//pixelData.resize(width*height);
+	pixelData = new Intensity[width*height];
 }
 
 IntensityImageStudent::~IntensityImageStudent() {
@@ -30,8 +28,10 @@ void IntensityImageStudent::set(const int width, const int height) {
 	IntensityImage::set(width, height);
 	//int throwError = 0, e = 1 / throwError;
 	//TODO: resize or create a new pixel storage (Don't forget to delete the old storage)
-	pixelData.clear();
-	pixelData.resize(width*height);
+	//pixelData.clear();
+	//pixelData.resize(width*height);
+	delete[] pixelData;
+	pixelData = new Intensity[width*height];
 }
 
 void IntensityImageStudent::set(const IntensityImageStudent &other) {
@@ -44,12 +44,7 @@ void IntensityImageStudent::set(const IntensityImageStudent &other) {
 void IntensityImageStudent::setPixel(int x, int y, Intensity pixel) {
 	//int throwError = 0, e = 1 / throwError;
 	//TODO: no comment needed :)
-	int i = 0;
-	if (y != 0){
-		int temp = width * (y - 1);
-		i = temp + x;
-	}
-	i = x;
+	int i = x + (getWidth() * y);
 	setPixel(i, pixel);
 }
 
@@ -82,12 +77,7 @@ void IntensityImageStudent::setPixel(int i, Intensity pixel) {
 Intensity IntensityImageStudent::getPixel(int x, int y) const {
 	//int throwError = 0, e = 1 / throwError;
 	//TODO: no comment needed :)
-	int i = 0;
-	if (y != 0){
-		int temp = width * (y - 1);
-		i = temp + x;
-	}
-	i = x;
+	int i = x + (getWidth() * y);
 	return getPixel(i);
 }
 
@@ -97,9 +87,9 @@ Intensity IntensityImageStudent::getPixel(int i) const {
 	return pixelData[i];
 }
 
-std::vector<Intensity> IntensityImageStudent::getAllPixels(){
+Intensity* IntensityImageStudent::getAllPixels(){
 	return pixelData;
 }
-void IntensityImageStudent::setAllPixels(std::vector<Intensity> pD){
+void IntensityImageStudent::setAllPixels(Intensity* pD){
 	pixelData = pD;
 }

@@ -23,10 +23,8 @@ public:
 	Intensity getPixel(int x, int y) const;
 	Intensity getPixel(int i) const;
 
-	std::vector<Intensity> getAllPixels();
-	void setAllPixels(std::vector<Intensity> pD);
+	Intensity* getAllPixels();
+	void setAllPixels(Intensity* pD);
 private:
-	int width = 0;
-	int height = 0;
-	std::vector<Intensity> pixelData;
+	Intensity *pixelData;
 };

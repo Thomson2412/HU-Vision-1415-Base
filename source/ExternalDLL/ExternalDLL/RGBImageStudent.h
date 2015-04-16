@@ -24,10 +24,8 @@ public:
 	RGB getPixel(int x, int y) const;
 	RGB getPixel(int i) const;
 
-	std::vector<RGB> getAllPixels();
-	void setAllPixels(std::vector<RGB> pD);
+	RGB* getAllPixels();
+	void setAllPixels(RGB* pD);
 private:
-	int width = 0;
-	int height = 0;
-	std::vector<RGB> pixelData;
+	RGB *pixelData;
 };

@@ -1,4 +1,5 @@
 #include "RGBImageStudent.h"
+#include <iostream>
 
 RGBImageStudent::RGBImageStudent() : RGBImage() {
 	//int throwError = 0, e = 1 / throwError; //Throws error without the need to include a header
@@ -13,14 +14,11 @@ RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) : RGBImage(other.
 }
 
 
-RGBImageStudent::RGBImageStudent(const int width, const int height) : 
-RGBImage(width, height),
-width(width),
-height(height){
+RGBImageStudent::RGBImageStudent(const int width, const int height) : RGBImage(width, height){
 	//int throwError = 0, e = 1 / throwError;
 	//TODO: Initialize pixel storage
-	pixelData.resize(width*height);
-	
+	//pixelData.resize(width*height);
+	pixelData = new RGB[width*height];
 }
 
 RGBImageStudent::~RGBImageStudent() {
@@ -32,8 +30,10 @@ void RGBImageStudent::set(const int width, const int height) {
 	RGBImage::set(width, height);
 	//int throwError = 0, e = 1 / throwError;
 	//TODO: resize or create a new pixel storage (Don't forget to delete the old storage)
-	pixelData.clear();
-	pixelData.resize(width*height);
+	//pixelData.clear();
+	//pixelData.resize(width*height);
+	delete[] pixelData;
+	pixelData = new RGB[width*height];
 }
 
 void RGBImageStudent::set(const RGBImageStudent &other) {
@@ -46,12 +46,8 @@ void RGBImageStudent::set(const RGBImageStudent &other) {
 void RGBImageStudent::setPixel(int x, int y, RGB pixel) {
 	//int throwError = 0, e = 1 / throwError;
 	//TODO: no comment needed :)
-	int i = 0;
-	if (y != 0){
-		int temp = width * (y - 1);
-		i = temp + x;
-	}
-	i = x;
+
+	int i = x + (getWidth() * y);
 	setPixel(i,pixel);
 }
 
@@ -84,12 +80,7 @@ void RGBImageStudent::setPixel(int i, RGB pixel) {
 RGB RGBImageStudent::getPixel(int x, int y) const {
 	//int throwError = 0, e = 1 / throwError;
 	//TODO: no comment needed :)
-	int i = 0;
-	if (y != 0){
-		int temp = width * (y - 1);
-		i = temp + x;
-	}
-	i = x;
+	int i = x + (getWidth() * y);
 	return getPixel(i);
 }
 
@@ -99,9 +90,9 @@ RGB RGBImageStudent::getPixel(int i) const {
 	return pixelData[i];
 }
 
-std::vector<RGB> RGBImageStudent::getAllPixels(){
+RGB* RGBImageStudent::getAllPixels(){
 	return pixelData;
 }
-void RGBImageStudent::setAllPixels(std::vector<RGB> pD){
+void RGBImageStudent::setAllPixels(RGB* pD){
 	pixelData = pD;
 }
