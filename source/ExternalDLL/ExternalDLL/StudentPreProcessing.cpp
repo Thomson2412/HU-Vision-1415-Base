@@ -15,7 +15,17 @@ IntensityImage * StudentPreProcessing::stepScaleImage(const IntensityImage &imag
 }
 
 IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &image) const {
-	return nullptr;
+	IntensityImage *newImage = new IntensityImageStudent(image.getWidth(), image.getHeight());
+	char kernel[3][3] = { { -1, 0, 1 }, 
+						  { -1, 0, 1 }, 
+						  { -1, 0, 1 } };
+
+	for (int y = 1; y < image.getHeight() - 1; y++){
+		for (int x = 1; x < image.getWidth() - 1; x++){
+
+		}
+	}
+	return newImage;
 }
 
 IntensityImage * StudentPreProcessing::stepThresholding(const IntensityImage &image) const {
