@@ -7,28 +7,9 @@ IntensityImage * StudentPreProcessing::stepToIntensityImage(const RGBImage &imag
 	IntensityImage *newImage = new IntensityImageStudent(image.getWidth(), image.getHeight());
 	for (int i = 0; i < image.getWidth() * image.getHeight(); i++){
 		RGB rgbPixel =  image.getPixel(i);
-		newImage->setPixel(i, Intensity((rgbPixel.r + rgbPixel.g + rgbPixel.b) / 10));
+		//newImage->setPixel(i, Intensity((rgbPixel.r + rgbPixel.g + rgbPixel.b) / 3));
+		newImage->setPixel(i, Intensity(((rgbPixel.r*0.21) + (rgbPixel.g*0.72) + (rgbPixel.b*0.07))));
 	}
-
-	/*IntensityImage *newImageBlur = new IntensityImageStudent(newImage->getWidth(), newImage->getHeight());
-	char kernel[3][3] = {
-			{ 1, 2, 1 },
-			{ 2, 4, 2 },
-			{ 1, 2, 1 }
-	};
-	float sum;
-
-	for (int y = 1; y < newImageBlur->getHeight() - 1; y++){
-		for (int x = 1; x < newImageBlur->getWidth() - 1; x++){
-			sum = 0.0;
-			for (int k = -1; k <= 1; k++){
-				for (int j = -1; j <= 1; j++){
-					sum = sum + kernel[j + 1][k + 1] * newImageBlur->getPixel(x - k, y - j);
-				}
-			}
-			newImageBlur->setPixel(x, y, int(sum / 16));
-		}
-	}*/
 	return newImage;
 }
 
@@ -113,6 +94,7 @@ IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &i
 			newImageSobel->setPixel(x, y, int(sum));
 		}
 	}
+	delete newImageBlur;
 	return newImageSobel;
 }
 
