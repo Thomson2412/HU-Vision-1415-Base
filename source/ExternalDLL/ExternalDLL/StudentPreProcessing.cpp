@@ -85,7 +85,7 @@ IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &i
 				}
 			}
 			float sum = abs(sumX) + abs(sumY);
-			if (sum > 255){
+			if (sum > 127){
 				sum = 255;
 			}
 			else if (sum < 0){
