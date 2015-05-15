@@ -101,6 +101,7 @@
     <ClInclude Include="RGBImagePrivate.h" />
     <ClInclude Include="RGBImageStudent.h" />
     <ClInclude Include="StudentExtraction.h" />
+    <ClInclude Include="StudentHistogram.h" />
     <ClInclude Include="StudentLocalization.h" />
     <ClInclude Include="StudentPreProcessing.h" />
   </ItemGroup>
@@ -128,6 +129,7 @@
     <ClCompile Include="RGBImagePrivate.cpp" />
     <ClCompile Include="RGBImageStudent.cpp" />
     <ClCompile Include="StudentExtraction.cpp" />
+    <ClCompile Include="StudentHistogram.cpp" />
     <ClCompile Include="StudentLocalization.cpp" />
     <ClCompile Include="StudentPreProcessing.cpp" />
   </ItemGroup>

@@ -6,7 +6,7 @@ StudentHistogram::StudentHistogram(int height, int width)
 	std::vector<int> histogramTable(height);
 }
 
-int StudentHistogram::setHistogram(int value) {
+void StudentHistogram::setHistogram(int value) {
 	histogramTable[value];
 }
 

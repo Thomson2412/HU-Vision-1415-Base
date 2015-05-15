@@ -32,16 +32,19 @@ bool StudentLocalization::stepFindNoseMouthAndChin(const IntensityImage &image, 
 	int blackCount = 0;
 	int lastPixel = 0;
 	for (int y = segmentY; y < (segmentHeight + segmentY); y++){
-		bool featureFound = true;
+		bool featureFound = false;
 		for (int x = segmentX; x < segmentX + (segmentWidth); x++){
 			Intensity pixel = image.getPixel(x,y);
-			if (pixel == 255){
+			/*if (pixel == 255){
 				featureFound = false;
-				break;
-			}
+				
+			}*/
 			if (pixel == 0){
 				++blackCount;
 			}
+		}
+		if (blackCount >= 10) {
+			featureFound = true;
 		}
 		if (featureFound && y > lastPixel + 2){
 			lastPixel = y;

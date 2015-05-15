@@ -7,7 +7,7 @@ class StudentHistogram
 public:
 	StudentHistogram(int height, int width);
 
-	int setHistogram(int value);
+	void setHistogram(int value);
 	std::vector<int> getHistogram();
 
 private:
