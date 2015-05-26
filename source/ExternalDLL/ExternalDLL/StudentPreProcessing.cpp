@@ -18,7 +18,7 @@ IntensityImage * StudentPreProcessing::stepScaleImage(const IntensityImage &imag
 }
 
 IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &image) const {
-	IntensityImage *newImageBlur = new IntensityImageStudent(image.getWidth(), image.getHeight());
+	/*IntensityImage *newImageBlur = new IntensityImageStudent(image.getWidth(), image.getHeight());
 	char kernel[3][3] = {
 			{ 1, 2, 1 },
 			{ 2, 4, 2 },
@@ -36,7 +36,7 @@ IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &i
 			}
 			newImageBlur->setPixel(x, y, sum / 16);
 		}
-	}
+	}*/
 
 	/*IntensityImage *newImageLap = new IntensityImageStudent(image.getWidth(), image.getHeight());
 	char kernelLap[3][3] = {
@@ -58,7 +58,7 @@ IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &i
 		}
 	}*/
 
-	IntensityImage *newImageSobel = new IntensityImageStudent(newImageBlur->getWidth(), newImageBlur->getHeight());
+	IntensityImage *newImageSobel = new IntensityImageStudent(image.getWidth(), image.getHeight());
 	char kernelX[3][3] = {
 							{ -1, 0, 1 }, 
 							{ -2, 0, 2 }, 
@@ -73,19 +73,19 @@ IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &i
 	float sumX;
 	float sumY;
 
-	for (int y = 1; y < newImageBlur->getHeight() - 1; y++){
-		for (int x = 1; x < newImageBlur->getWidth() - 1; x++){
+	for (int y = 1; y < image.getHeight() - 1; y++){
+		for (int x = 1; x < image.getWidth() - 1; x++){
 			sumX = 0.0;
 			sumY = 0.0;
 			for (int k = -1; k <= 1; k++){
 				for (int j = -1; j <= 1; j++){
-					sumX = sumX + kernelX[j + 1][k + 1] * newImageBlur->getPixel(x - k, y - j);
-					sumY = sumY + kernelY[j + 1][k + 1] * newImageBlur->getPixel(x - k, y - j);
+					sumX = sumX + kernelX[j + 1][k + 1] * image.getPixel(x - k, y - j);
+					sumY = sumY + kernelY[j + 1][k + 1] * image.getPixel(x - k, y - j);
 
 				}
 			}
 			float sum = abs(sumX) + abs(sumY);
-			if (sum > 80){
+			if (sum > 180){
 				sum = 255;
 			}
 			else if (sum < 0){
@@ -94,7 +94,6 @@ IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &i
 			newImageSobel->setPixel(x, y, int(sum));
 		}
 	}
-	delete newImageBlur;
 	return newImageSobel;
 }
 
