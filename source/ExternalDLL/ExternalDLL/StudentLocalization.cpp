@@ -69,24 +69,24 @@ bool StudentLocalization::stepFindNoseMouthAndChin(const IntensityImage &image, 
 	//}
 
 	if (featureFoundCount > 3){
-		//std::cout << "Count > 3" << std::endl;
+		std::cout << "Count > 3" << std::endl;
 		Feature FT;
 		FT = Feature(Feature::FEATURE_NOSE_BOTTOM, Point2D<double>(featureFoundList[0]));
-		//std::cout << "NOSE_BOTTOM: " << featureFoundList[0].getY() << std::endl;
+		std::cout << "NOSE_BOTTOM: " << featureFoundList[0].getY() << std::endl;
 		features.putFeature(FT);
 
 		FT = Feature(Feature::FEATURE_MOUTH_TOP, Point2D<double>(featureFoundList[1].getX(), featureFoundList[1].getY()));
-		//std::cout << "MOUTH_TOP: " << featureFoundList[1].getY() << std::endl;
+		std::cout << "MOUTH_TOP: " << featureFoundList[1].getY() << std::endl;
 		features.putFeature(FT);
 		FT = Feature(Feature::FEATURE_MOUTH_CENTER, Point2D<double>(featureFoundList[1].getX(), ((featureFoundList[1].getY() + featureFoundList[2].getY()) / 2)));
-		//std::cout << "MOUTH_CENTER: " << (featureFoundList[1].getY() + featureFoundList[2].getY()) / 2 << std::endl;
+		std::cout << "MOUTH_CENTER: " << (featureFoundList[1].getY() + featureFoundList[2].getY()) / 2 << std::endl;
 		features.putFeature(FT);
 		FT = Feature(Feature::FEATURE_MOUTH_BOTTOM, Point2D<double>(featureFoundList[2]));
-		//std::cout << "MOUTH_BOTTOM: " << featureFoundList[2].getY() << std::endl;
+		std::cout << "MOUTH_BOTTOM: " << featureFoundList[2].getY() << std::endl;
 		features.putFeature(FT);
 
 		FT = Feature(Feature::FEATURE_CHIN, Point2D<double>(featureFoundList[3]));
-		//std::cout << "FEATURE_CHIN: " << featureFoundList[3].getY() << std::endl;
+		std::cout << "FEATURE_CHIN: " << featureFoundList[3].getY() << std::endl;
 		features.putFeature(FT);
 	}
 	else if (featureFoundCount == 3){

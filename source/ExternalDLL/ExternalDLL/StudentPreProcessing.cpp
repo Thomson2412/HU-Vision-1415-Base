@@ -18,93 +18,84 @@ IntensityImage * StudentPreProcessing::stepScaleImage(const IntensityImage &imag
 }
 
 IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &image) const {
-	/*IntensityImage *newImageBlur = new IntensityImageStudent(image.getWidth(), image.getHeight());
-	char kernel[3][3] = {
-			{ 1, 2, 1 },
-			{ 2, 4, 2 },
-			{ 1, 2, 1 }
+	IntensityImage *newImage = new IntensityImageStudent(image.getWidth(), image.getHeight());
+	IntensityImage *newImageBlur = new IntensityImageStudent(image.getWidth(), image.getHeight());
+	char kernelBlur[3][3] = {
+	{ 1, 2, 1 },
+	{ 2, 4, 2 },
+	{ 1, 2, 1 }
 	};
-	float sum;
-
+	float blur;
 	for (int y = 1; y < image.getHeight() - 1; y++){
 		for (int x = 1; x < image.getWidth() - 1; x++){
-			sum = 0.0;
+			blur = 0.0;
 			for (int k = -1; k <= 1; k++){
 				for (int j = -1; j <= 1; j++){
-					sum = sum + kernel[j + 1][k + 1] * image.getPixel(x - k, y - j);
+					blur += kernelBlur[j + 1][k + 1] * image.getPixel(x - k, y - j);
 				}
 			}
-			newImageBlur->setPixel(x, y, sum / 16);
+			newImageBlur->setPixel(x, y, blur / 16);
 		}
-	}*/
+	}
 
-	/*IntensityImage *newImageLap = new IntensityImageStudent(image.getWidth(), image.getHeight());
-	char kernelLap[3][3] = {
-			{ -1, -1, -1 },
-			{ -1, -8, -1 },
-			{ -1, -1, -1 }
-	};
-	sum = 0.0;
 
-	for (int y = 1; y < newImageBlur->getHeight() - 1; y++){
-		for (int x = 1; x < newImageBlur->getWidth() - 1; x++){
-			sum = 0.0;
-			for (int k = -1; k <= 1; k++){
-				for (int j = -1; j <= 1; j++){
-					sum = sum + kernelLap[j + 1][k + 1] * newImageBlur->getPixel(x - k, y - j);
-				}
-			}
-			newImageLap->setPixel(x, y, sum);
+	char kernel[9][9] =
+	{ { 0, 0, 0, 1, 1, 1, 0, 0, 0 },
+	{ 0, 0, 0, 1, 1, 1, 0, 0, 0 },
+	{ 0, 0, 0, 1, 1, 1, 0, 0, 0 },
+	{ 1, 1, 1, -4, -4, -4, 1, 1, 1 },
+	{ 1, 1, 1, -4, -4, -4, 1, 1, 1 },
+	{ 1, 1, 1, -4, -4, -4, 1, 1, 1 },
+	{ 0, 0, 0, 1, 1, 1, 0, 0, 0 },
+	{ 0, 0, 0, 1, 1, 1, 0, 0, 0 },
+	{ 0, 0, 0, 1, 1, 1, 0, 0, 0 } };
+
+	for (int y = 0; y < newImage->getHeight(); y++){
+		for (int x = 0; x <= newImage->getWidth(); x++){
+			newImage->setPixel(x, y, 0);
 		}
-	}*/
+	}
 
-	IntensityImage *newImageSobel = new IntensityImageStudent(image.getWidth(), image.getHeight());
-	char kernelX[3][3] = {
-							{ -1, 0, 1 }, 
-							{ -2, 0, 2 }, 
-							{ -1, 0, 1 }
-						};
-	char kernelY[3][3] = {
-							{ -1, -2, -1 },
-							{ 0, 0, 0 },
-							{ 1, 2, 1 }
-						};
+	int sum;
 
-	float sumX;
-	float sumY;
-
-	for (int y = 1; y < image.getHeight() - 1; y++){
-		for (int x = 1; x < image.getWidth() - 1; x++){
-			sumX = 0.0;
-			sumY = 0.0;
-			for (int k = -1; k <= 1; k++){
-				for (int j = -1; j <= 1; j++){
-					sumX = sumX + kernelX[j + 1][k + 1] * image.getPixel(x - k, y - j);
-					sumY = sumY + kernelY[j + 1][k + 1] * image.getPixel(x - k, y - j);
+	for (int y = 4; y < newImageBlur->getHeight() - 4; y++){
+		for (int x = 4; x < newImageBlur->getWidth() - 4; x++){
+			sum = 0;
+			for (int k = -4; k <= 4; k++){
+				for (int j = -4; j <= 4; j++){
+					sum += kernel[k + 4][j + 4] * newImageBlur->getPixel(x - k, y - j);
 
 				}
 			}
-			float sum = abs(sumX) + abs(sumY);
-			if (sum > 180){
+			if (sum > 255){
 				sum = 255;
 			}
 			else if (sum < 0){
 				sum = 0;
 			}
-			newImageSobel->setPixel(x, y, int(sum));
+			newImage->setPixel(x, y, sum);
 		}
 	}
-	return newImageSobel;
+	return newImage;
 }
 
 IntensityImage * StudentPreProcessing::stepThresholding(const IntensityImage &image) const {
 	IntensityImage *intensityImage = new IntensityImageStudent(image.getWidth(), image.getHeight());
 	int intensityValue = 0;
+	int threshold = 0;
+	int offset = 150;
+
+	for (int y = 0; y < image.getHeight(); y++){
+		for (int x = 0; x <= image.getWidth(); x++){
+			threshold += image.getPixel(x, y);
+		}
+	}
+	threshold = (threshold / (image.getHeight() * image.getWidth())) + offset;
 	
-	for (int y = 1; y < image.getHeight() - 1; y++){
-		for (int x = 1; x < image.getWidth() - 1; x++){
+	for (int y = 0; y < image.getHeight(); y++){
+		for (int x = 0; x < image.getWidth(); x++){
 			intensityValue = image.getPixel(x, y);
-			if (intensityValue > 120) {
+			if (intensityValue >= threshold) {
 				intensityValue = 0;
 			} else {
 				intensityValue = 255;
