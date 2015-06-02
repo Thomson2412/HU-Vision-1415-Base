@@ -20,20 +20,20 @@ IntensityImage * StudentPreProcessing::stepScaleImage(const IntensityImage &imag
 	float ratio = 0;
 
 	if (image.getWidth() > image.getHeight() && image.getWidth() > max){
-		std::cout << "w > m" << std::endl;
+		//std::cout << "w > m" << std::endl;
 		ratio = max / image.getWidth();
 	}
 	else if (image.getHeight() > max){
-		std::cout << "w > h" << std::endl;
+		//std::cout << "w > h" << std::endl;
 		ratio = max / image.getHeight();
 	}
 	if (ratio > 0){
 		height = image.getHeight() * ratio;
 		width = image.getWidth() * ratio;
 	}
-	std::cout << ratio << std::endl;
-	std::cout << image.getHeight() << std::endl << image.getWidth() << std::endl;
-	std::cout << height << std::endl << width << std::endl;
+	//std::cout << ratio << std::endl;
+	//std::cout << image.getHeight() << std::endl << image.getWidth() << std::endl;
+	//std::cout << height << std::endl << width << std::endl;
 	IntensityImage *newImage = new IntensityImageStudent(width, height);
 	int A, B, C, D, x, y, index, gray;
 	float x_ratio = ((float)(image.getWidth() - 1)) / width;
